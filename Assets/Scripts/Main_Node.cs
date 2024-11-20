@@ -30,9 +30,24 @@ public class Main_Node : MonoBehaviour
     GameObject scoreObj = null;
     Score_Counter counter = null;
 
+    GameObject variable_tracker = null;
+    Variable_Tracker tracker = null;
+
+    public int maxMistakes = 10;
+
     void Start()
     {
         Debug.Log("Start");
+
+        variable_tracker = GameObject.Find("VariableTracker");
+        if (variable_tracker != null)
+        {
+            tracker = variable_tracker.GetComponent<Variable_Tracker>();
+        }
+        else
+        {
+            Debug.LogWarning("GameObject with VariableTracker not found.");
+        }
 
         scoreObj = GameObject.Find("ScoreScript");
         if (scoreObj != null)
@@ -81,9 +96,23 @@ public class Main_Node : MonoBehaviour
             else { 
                 message = fileHandler.GetLine();
                 if (message == null) { 
+
+                    if(tracker.mode == 1)
+                    {
+                        counter.increment();
+
+                    }
+                    if (tracker.mode == 2)
+                    {
+                        if(tracker.ticks < maxMistakes)
+                        {
+                            counter.increment();
+                        }
+                        tracker.ticks = 0;
+                    }
+
                     fileHandler.ResetReader();
-                    message = fileHandler.GetLine();
-                    counter.increment();
+
                 }
             }
 

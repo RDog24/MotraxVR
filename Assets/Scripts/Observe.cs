@@ -16,8 +16,22 @@ public class Observe : MonoBehaviour
 
     Posture_Indicator color_changer;
 
+    GameObject variable_tracker = null;
+    Variable_Tracker tracker = null;
+
     void Start()
     {
+
+        variable_tracker = GameObject.Find("VariableTracker");
+        if (variable_tracker != null)
+        {
+            tracker = variable_tracker.GetComponent<Variable_Tracker>();
+        }
+        else
+        {
+            Debug.LogWarning("GameObject with VariableTracker not found.");
+        }
+
         GameObject reference = GameObject.Find("WriteFile");
         if (reference != null)
         {
@@ -103,23 +117,42 @@ public class Observe : MonoBehaviour
             return;
         }
 
+        if (tracker.mode == 1) { 
+            if (Mathf.Abs(other_node_C.delta_x - other_node_U.delta_x) > 30.0f || Mathf.Abs(other_node_C.delta_y - other_node_U.delta_y) > 30.0f || Mathf.Abs(other_node_C.delta_z - other_node_U.delta_z) > 30.0f)
+            {
+                Debug.Log($"{other_node_U.gameObject.name} should rotated by {other_node_C.delta_x - other_node_U.delta_x} degrees on the x-axis, {other_node_C.delta_y - other_node_U.delta_y} degrees on the y-axis, and {other_node_C.delta_z - other_node_U.delta_z} degrees on the z-axis");
+                //Debug.Log($"{gameObject.name}Observe angles: x: {referenceX}, y: {referenceY}, z: {referenceZ}");
+                //Debug.Log($"{other_node.gameObject.name} Other_Node angles: x: {other_node.delta_x}, y: {other_node.delta_y}, z: {other_node.delta_z}");
+                main_Node.readFile = false;
+                color_changer.set_color(other_node_U.gameObject.name);
 
-        if (Mathf.Abs(other_node_C.delta_x - other_node_U.delta_x) > 30.0f || Mathf.Abs(other_node_C.delta_y - other_node_U.delta_y) > 30.0f || Mathf.Abs(other_node_C.delta_z - other_node_U.delta_z) > 30.0f)
-        {
-            Debug.Log($"{other_node_U.gameObject.name} should rotated by {other_node_C.delta_x - other_node_U.delta_x} degrees on the x-axis, {other_node_C.delta_y - other_node_U.delta_y} degrees on the y-axis, and {other_node_C.delta_z - other_node_U.delta_z} degrees on the z-axis");
-            //Debug.Log($"{gameObject.name}Observe angles: x: {referenceX}, y: {referenceY}, z: {referenceZ}");
-            //Debug.Log($"{other_node.gameObject.name} Other_Node angles: x: {other_node.delta_x}, y: {other_node.delta_y}, z: {other_node.delta_z}");
-            main_Node.readFile = false;
-            color_changer.set_color(other_node_U.gameObject.name);
-            
+            }
+            else
+            {
+                Debug.Log("Aligned with");
+                main_Node.readFile = true;
+                color_changer.reset_color(other_node_U.gameObject.name);
+            }
         }
-        else
+        if (tracker.mode == 2)
         {
-            Debug.Log("Aligned with");
-            main_Node.readFile = true;
-            color_changer.reset_color(other_node_U.gameObject.name);
-        }
+            if (Mathf.Abs(other_node_C.delta_x - other_node_U.delta_x) > 30.0f || Mathf.Abs(other_node_C.delta_y - other_node_U.delta_y) > 30.0f || Mathf.Abs(other_node_C.delta_z - other_node_U.delta_z) > 30.0f)
+            {
+                Debug.Log($"{other_node_U.gameObject.name} should rotated by {other_node_C.delta_x - other_node_U.delta_x} degrees on the x-axis, {other_node_C.delta_y - other_node_U.delta_y} degrees on the y-axis, and {other_node_C.delta_z - other_node_U.delta_z} degrees on the z-axis");
+                //Debug.Log($"{gameObject.name}Observe angles: x: {referenceX}, y: {referenceY}, z: {referenceZ}");
+                //Debug.Log($"{other_node.gameObject.name} Other_Node angles: x: {other_node.delta_x}, y: {other_node.delta_y}, z: {other_node.delta_z}");
+                tracker.ticks++;
+                main_Node.readFile = true;
+                color_changer.set_color(other_node_U.gameObject.name);
 
+            }
+            else
+            {
+                Debug.Log("Aligned with");
+                main_Node.readFile = true;
+                color_changer.reset_color(other_node_U.gameObject.name);
+            }
+        }
 
     }
 
