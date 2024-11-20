@@ -8,4 +8,16 @@ public class Variable_Tracker : MonoBehaviour
 
     public int ticks = 0;
 
+    public void flipMode()
+    {
+        if (mode == 1)
+        {
+            mode = 2;
+        }
+        else
+        {
+            mode = 1;
+        }
+    }
+
 }
