@@ -141,7 +141,10 @@ public class Observe : MonoBehaviour
                 Debug.Log($"{other_node_U.gameObject.name} should rotated by {other_node_C.delta_x - other_node_U.delta_x} degrees on the x-axis, {other_node_C.delta_y - other_node_U.delta_y} degrees on the y-axis, and {other_node_C.delta_z - other_node_U.delta_z} degrees on the z-axis");
                 //Debug.Log($"{gameObject.name}Observe angles: x: {referenceX}, y: {referenceY}, z: {referenceZ}");
                 //Debug.Log($"{other_node.gameObject.name} Other_Node angles: x: {other_node.delta_x}, y: {other_node.delta_y}, z: {other_node.delta_z}");
-                tracker.ticks++;
+                if(main_Node.active == true)
+                {
+                    tracker.ticks++;
+                }
                 main_Node.readFile = true;
                 color_changer.set_color(other_node_U.gameObject.name);
 

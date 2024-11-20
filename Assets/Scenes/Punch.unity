@@ -16776,6 +16776,7 @@ MonoBehaviour:
   disableUDP: 1
   speed: 15
   maxMistakes: 10
+  active: 0
 --- !u!4 &717373518
 Transform:
   m_ObjectHideFlags: 0
@@ -41395,6 +41396,7 @@ MonoBehaviour:
   disableUDP: 0
   speed: 1
   maxMistakes: 10
+  active: 1
 --- !u!4 &1756841871
 Transform:
   m_ObjectHideFlags: 0

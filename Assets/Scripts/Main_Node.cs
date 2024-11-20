@@ -137,6 +137,7 @@ public class Main_Node : MonoBehaviour
             {
                 message = fileHandler.GetLine();
                 fileHandler.ResetReader();
+                tracker.ticks = 0;
             }
 
             if (!string.IsNullOrEmpty(message))
