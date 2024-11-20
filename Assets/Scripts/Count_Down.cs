@@ -32,6 +32,7 @@ public class Count_Down : MonoBehaviour
 
     void Update()
     {
+        countdownText.text = "";
         if (start_count == true) { 
             // Decrease the timer over time
             if (currentTime > 0)
@@ -62,10 +63,8 @@ public class Count_Down : MonoBehaviour
 
 
         reset_countdown();
-        countdownText.text = "";
         stop_countdown();
 
-        //reset_countdown();
     }
 
     public void reset_countdown() {

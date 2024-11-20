@@ -16,7 +16,7 @@ public class Observe : MonoBehaviour
 
     Posture_Indicator color_changer;
 
-    private void Awake()
+    void Start()
     {
         GameObject reference = GameObject.Find("WriteFile");
         if (reference != null)
@@ -61,20 +61,7 @@ public class Observe : MonoBehaviour
         }
 
 
-        if (other_node_U == null)
-        {
-            Debug.LogWarning($"Other_Node with number {target_number} not found.");
-        }
 
-        if (other_node_C == null)
-        {
-            Debug.LogWarning($"Other_Node with number {target_number} not found.");
-        }
-
-    }
-
-    void Start()
-    {
 
         if (other_node_U == null)
         {

@@ -26,7 +26,8 @@ public class Other_Node : MonoBehaviour
 
     Main_Node main_Node;
 
-    private void Awake()
+    // Start is called before the first frame update
+    private void Start()
     {
         GameObject reference = GameObject.Find(objName);
         if (reference != null)
@@ -37,11 +38,7 @@ public class Other_Node : MonoBehaviour
         {
             Debug.LogWarning("GameObject with Write not found.");
         }
-    }
 
-    // Start is called before the first frame update
-    private void Start()
-    {
         waiting = new Queue<float>();
         setting = transform.rotation;
     }
