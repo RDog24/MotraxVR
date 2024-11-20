@@ -35,6 +35,8 @@ public class Main_Node : MonoBehaviour
 
     public int maxMistakes = 10;
 
+    public bool active = false;
+
     void Start()
     {
         Debug.Log("Start");
@@ -80,40 +82,61 @@ public class Main_Node : MonoBehaviour
         networkTask = Task.Run(() => NetworkListener(cancellationTokenSource.Token), cancellationTokenSource.Token);
     }
 
+    public void setActive()
+    {
+        active = true;
+    }
+
+    public void resetActive()
+    {
+        active = false;
+    }
+
     private void NetworkListener(CancellationToken token)
     {
         while (!token.IsCancellationRequested)
         {
             string message = null;
 
-            if (readFile == false)
+            if (active == true)
             {
-                if (disableUDP == false)
+
+                if (readFile == false)
                 {
-                    message = listener.dataReceived;
-                }
-            }
-            else { 
-                message = fileHandler.GetLine();
-                if (message == null) { 
-
-                    if(tracker.mode == 1)
+                    if (disableUDP == false)
                     {
-                        counter.increment();
-
+                        message = listener.dataReceived;
                     }
-                    if (tracker.mode == 2)
+                }
+                else
+                {
+                    message = fileHandler.GetLine();
+                    if (message == null)
                     {
-                        if(tracker.ticks < maxMistakes)
+
+                        if (tracker.mode == 1)
                         {
                             counter.increment();
+
                         }
-                        tracker.ticks = 0;
+                        if (tracker.mode == 2)
+                        {
+                            if (tracker.ticks < maxMistakes)
+                            {
+                                counter.increment();
+                            }
+                            tracker.ticks = 0;
+                        }
+
+                        fileHandler.ResetReader();
+
                     }
-
-                    fileHandler.ResetReader();
-
                 }
+            }
+            else
+            {
+                message = fileHandler.GetLine();
+                fileHandler.ResetReader();
             }
 
             if (!string.IsNullOrEmpty(message))

@@ -59,16 +59,15 @@ public class Count_Down : MonoBehaviour
         // Add any actions you want to happen when the countdown reaches zero
         //Debug.Log("Countdown Finished!");
 
-        
+        main.setActive();
 
 
         reset_countdown();
-        stop_countdown();
-
     }
 
     public void reset_countdown() {
         currentTime = countdownTime;
+        stop_countdown();
     }
 
     public void start_countdown() { 

@@ -21,7 +21,5 @@ public class SetMenuText : MonoBehaviour
         {
             text.text = "Mode 1";
         }
-
     }
-
 }
